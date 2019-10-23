@@ -13,7 +13,7 @@
 #define PGM_MAX_ITER (1000)
 #define PGM_EPS_ABS (1e-4f)
 #define PGM_EPS_REL (1e-4f)
-#define PGM_CHECK_TERMINATION (20)
+#define PGM_CHECK_TERMINATION (60)
 
 /* Functions */
 
