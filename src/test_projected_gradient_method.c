@@ -32,13 +32,13 @@ void print_timer_info(BCINVTimer timer, char *timer_name);
 
 #define ABS_ERROR_TOL (1e-6f)
 
-float pgm_solution[PGM_DIM];
-float test_sol[10];
+pgm_float pgm_solution[PGM_DIM];
+pgm_float test_sol[10];
 
 void test_gradient_step() {
 	printf("Testing PGM_gradient_step()\n");
 	int i;
-	float error = 0.0;
+	pgm_float error = 0.0;
 	PGM_initialize(obj_func_mat, obj_func_vec, obj_func_lipsch_const, symmetric_box_rate_projection);
 	PGM_gradient_step(test_input_gradient_step, test_sol);
 	for (i = 0; i < PGM_DIM; i++) {
@@ -52,8 +52,8 @@ void test_gradient_step() {
 void test_algorithm() {
 	printf("Testing algorithm()\n");
 	int retval, i;
-	float error = 0.0;
-	float error2 = 0.0;
+	pgm_float error = 0.0;
+	pgm_float error2 = 0.0;
 	BCINVTimer * osqp_timer = construct_timer();
 	BCINVTimer * pgm_timer = construct_timer();
 
@@ -72,7 +72,7 @@ void test_algorithm() {
 		printf("sol_osqp_matl[%d] = %.4f, sol_pgm[%d] = %.4f, sol_osqp_C[%d] = %.4f\n",
 				i, osqp_sol[i], i, pgm_solution[i], i, workspace.solution->x[i]);
 		error += (osqp_sol[i]- pgm_solution[i]) * (osqp_sol[i]- pgm_solution[i]);
-		error2 += (workspace.solution->x[i]- pgm_solution[i]) * (workspace.solution->x[i]- pgm_solution[i]);
+		error2 += ((pgm_float)workspace.solution->x[i]- pgm_solution[i]) * ((pgm_float)workspace.solution->x[i]- pgm_solution[i]);
 	}
 
 	printf("Return value = %d (0 = success)\n", retval);
